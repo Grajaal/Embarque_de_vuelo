@@ -17,6 +17,12 @@ void asi_handler(int);
 int calculatesRandom(int, int);
 
 int main(int argc, char const *argv[]){
+
+        if(argv[1]<=0){
+            perror("El numero de asistentes no es correcto\n");
+            exit(-1);
+        }
+
         srand(time(NULL)); //Iniciacion de la semilla de numeros aleatorios 
 
         int numAsistentes=atoi(argv[1]);
@@ -104,7 +110,6 @@ int main(int argc, char const *argv[]){
             *(pasajerosEmbarcados+i-2)=WEXITSTATUS(status);
         }
 
-        pasajeros=0;
         for(int i=2;i<numTrabajadores;i++){
             pasajeros+=*(pasajerosEmbarcados+i-2);
         }
@@ -112,10 +117,6 @@ int main(int argc, char const *argv[]){
         if(hayOverbooking==1) pasajeros-=10;
     
         printf(RED"\tEl coordinador recibe que el numero de pasajeros es de %d\n", pasajeros);
-
-        for(int i=0;i<numAsistentes;i++){
-            printf(RED"\n\n\tAsistente %d, embarca a %d pasajeros\n", *(pid_trabajadores+i+2), *(pasajerosEmbarcados+i));
-        }
 
         free(pasajerosEmbarcados);
         free(pid_trabajadores);
